@@ -1,8 +1,75 @@
-*.js
-!jest.config.js
-*.d.ts
-node_modules
+# === AWS CDK / SAM / Lambda ===
+cdk.out/
+.aws-sam/
+.idea/
+.vscode/
+.env
+.env.*       # optional: .env.dev, .env.prod
+*.template.yaml
+*.log
 
-# CDK asset staging directory
-.cdk.staging
-cdk.out
+# === Python (for Lambda or scripts) ===
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.venv/
+venv/
+env/
+dist/
+build/
+pip-wheel-metadata/
+coverage.xml
+htmlcov/
+
+# === Node.js (for Lambda or frontends) ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+.pnpm-debug.log
+
+# === Java (if applicable for Lambda) ===
+target/
+*.class
+
+# === Terraform ===
+.terraform/
+*.tfstate
+*.tfstate.backup
+crash.log
+terraform.tfvars
+
+# === AWS CLI/SDK/Toolkit artifacts ===
+*.pem
+*.key
+*.crt
+*.csr
+*.der
+*.jks
+*.p12
+*.pfx
+*.bak
+*.swp
+
+# AWS credentials/config (DO NOT commit!)
+*.aws/credentials
+*.aws/config
+
+# === Docker ===
+*.tar
+*.img
+*.container
+docker-compose.override.yml
+
+# === OS/system files ===
+.DS_Store
+Thumbs.db
+
+# === Misc ===
+*.zip
+*.tmp
+*.bak
+*.swp
