@@ -10,7 +10,9 @@ export class CodePipelineWithCdkStack extends cdk.Stack {
     new CodePipeline(this, 'Pipeline', {
       pipelineName: 'TestPipeline',
       synth: new ShellStep('Synth', {
-        input: CodePipelineSource.gitHub('mengyunxie/aws-awesome', 'main'),
+        input: CodePipelineSource.gitHub(
+          'mengyunxie/aws-awesome', 
+          'main'),
         commands: [
           // Move into the subdirectory
           'cd codePipelineWithCDK',
