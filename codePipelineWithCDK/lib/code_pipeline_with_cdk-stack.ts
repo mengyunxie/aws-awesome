@@ -21,7 +21,8 @@ export class CodePipelineWithCdkStack extends cdk.Stack {
           'npm ci',
           'npm run build',
           'npx cdk synth'
-        ]
+        ],
+        primaryOutputDirectory: 'codePipelineWithCDK/cdk.out' // This tells it where to find the output
       }),
     });
   }
