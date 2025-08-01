@@ -1,13 +1,13 @@
 import * as cdk from 'aws-cdk-lib';
-import { CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
 import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import { CodePipeline, CodePipelineSource, ManualApprovalStep, ShellStep } from 'aws-cdk-lib/pipelines';
+import { MyPipelineAppStage } from './stage';
 
 export class CodePipelineWithCdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    new CodePipeline(this, 'Pipeline', {
+    const pipeline = new CodePipeline(this, 'Pipeline', {
       pipelineName: 'TestPipeline',
       synth: new ShellStep('Synth', {
         input: CodePipelineSource.gitHub(
@@ -25,5 +25,16 @@ export class CodePipelineWithCdkStack extends cdk.Stack {
         primaryOutputDirectory: 'codePipelineWithCDK/cdk.out' // This tells it where to find the output
       }),
     });
+
+    const testingStage = pipeline.addStage(new MyPipelineAppStage(this, "test", {
+      env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION }
+    }))
+
+    testingStage.addPost(new ManualApprovalStep('Manual approval before production'));
+
+    const prodStage = pipeline.addStage(new MyPipelineAppStage(this, "prod", {
+      env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION }
+    }))
+
   }
 }
